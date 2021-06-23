@@ -10,7 +10,7 @@ Link to our GitHub repository: https://johnglendening.github.io/Project_3/
 
 Group Team 7
 
-COVID-19 struck hard, but the vaccination may strike harder. How will the vaccinations affect populations? Will all those vaccinated turn to zombies and try to take over civilization? Group-Team-7 is here to compare data sets between two culturally & geographically different nations, hopefully provide some quality visualizations, and excite you with our analysis.
+COVID-19 struck hard, but the vaccination may strike harder. How will the vaccinations affect populations? Will all those vaccinated turn to zombies and try to take over civilization? Group-Team-7 is here to compare the United States and global COVID-19 data, hopefully provide some quality visualizations, and excite you with our analysis.
 
 Database: • JavaScript • Html • CSS • Python Flask • Pandas • Tableau • Matplotlib 
 JavaScript Libraries: • D3 • Anime.js • JavaScript Plotly • Leaflet
