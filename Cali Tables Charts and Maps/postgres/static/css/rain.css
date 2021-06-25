@@ -6,7 +6,7 @@ body {
 
 .rainDrop {
     position: absolute;
-    background: linear-gradient(180deg, white, rgb(189, 3, 3) 90%, black);
+    background: linear-gradient(180deg, white, rgb(175, 17, 28) 90%, black);
     border-radius: 100% 100% 80% 80%;
 }
 
