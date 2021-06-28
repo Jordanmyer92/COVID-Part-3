@@ -103,6 +103,16 @@ def caliheatmap():
     return render_template('Caliheatmap.html')
 
 
+@app.route("/destroy.html")
+def destroy():
+    return render_template('destroy.html')
+
+
+@app.route("/rebirth.html")
+def rebirth():
+    return render_template('rebirth.html')
+
+
 @app.route("/total_vaccinations_per_hundredMap.html")
 def per100():
     return render_template('total_vaccinations_per_hundredMap.html')

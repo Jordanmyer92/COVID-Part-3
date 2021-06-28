@@ -19,14 +19,21 @@
 
     <!-- Our CSS -->
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <style>
+        body {
+            background-image: url('/static/resources/prebomb.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
 
 
 </head>
 
 <body>
 
-    <!-- map div -->
-    <div id="map"></div>
+
 
 
     <!-- Leaflet JS -->
@@ -37,6 +44,10 @@
     <script type="text/javascript" src="/static/js/map.js"></script>
     <!-- Marker Cluster JS -->
     <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js"></script>
+    <audio controls autoplay>
+        <source src="\static\resources\The Walking Dead.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
 
     <!-- <script type="text/javascript" src="logic.js"></script> -->
     <!-- <script type="text/javascript" src="static/js/logic3.js"></script> -->
