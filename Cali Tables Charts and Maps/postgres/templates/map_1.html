@@ -1,0 +1,276 @@
+<!--This is a standard html file to drop our Leaflet map-->
+<!DOCTYPE html>
+<html lang="en">
+<!-- Standard head.  We call project Leaflet Step-1.  Additionally we bring in the stylesheet for Leaflet and our own css-->
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>COVID Statistics in the US. (COVID total vaccinations)</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
+    <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+    <!-- Our CSS -->
+    <link rel="stylesheet" type="text/css" href="/static/css/mstyle.css" />
+</head>
+
+<meta charset="utf-8" />
+<title> Covid-19 Map</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet" />
+<a class="nav-link active" aria-current="page" href="home.html">Home</a>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    }
+    
+    .legend {
+        background-color: #fff;
+        border-radius: 3px;
+        bottom: 30px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+        padding: 10px;
+        position: absolute;
+        right: 10px;
+        z-index: 1;
+    }
+    
+    .legend h4 {
+        margin: 0 0 10px;
+    }
+    
+    .legend div span {
+        border-radius: 50%;
+        display: inline-block;
+        height: 10px;
+        margin-right: 5px;
+        width: 10px;
+    }
+    
+    .mapboxgl-popup {
+        max-width: 1000px;
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        z-index: 100;
+        display: flex;
+    }
+    
+    strong {
+        display: inline;
+    }
+    
+    p {
+        display: inline;
+    }
+</style>
+</head>
+
+<body>
+
+
+    <div id="map"></div>
+
+    <div id="state-legend" class="legend">
+        <h4>Based on Confirmed Cases (US)</h4>
+        <div><span style="background-color: #5b0909;"></span>≥3,000,000</div>
+        <div><span style="background-color: #940a37;"></span>≥2,000,000</div>
+        <div><span style="background-color: #e26241;"></span>≥1,000,000</div>
+        <div><span style="background-color: #ffd369;"></span>≥500,000</div>
+        <div><span style="background-color: #f6eedf;"></span>≥100,000</div>
+    </div>
+
+    <div id="county-legend" class="legend" style="display: none;">
+        <h4>Based on Confirmed Cases (California state)</h4>
+        <div><span style="background-color: #5b0909;"></span>≥300,000</div>
+        <div><span style="background-color: #940a37;"></span>≥100,000</div>
+        <div><span style="background-color: #e26241;"></span>≥50,000</div>
+        <div><span style="background-color: #ffd369;"></span>≥10,000</div>
+        <div><span style="background-color: #f6eedf;"></span>≥1,000</div>
+    </div>
+
+    <script>
+        mapboxgl.accessToken =
+            "pk.eyJ1IjoiYWxzaGFtc2k5NiIsImEiOiJja3Fkcng0NW4wZ3BvMnZwaGtvbjRvbGdpIn0.f9nk2hKiNAgGOsZb61NRfA";
+        var map = new mapboxgl.Map({
+            container: "map",
+            style: "mapbox://styles/alshamsi96/ckqdsdspcdu9g17p8iqfhq6xk",
+            center: [-98, 38.88],
+            minZoom: 4,
+            zoom: 4,
+        });
+
+        var zoomThreshold = 5;
+        var hoveredStateId = null;
+        var clickedStateId = null;
+
+        map.on("load", function() {
+            map.addSource("county", {
+                type: "vector",
+                url: "mapbox://alshamsi96.cqyqnbja",
+            });
+
+            map.addSource("state", {
+                type: "vector",
+                url: "mapbox://alshamsi96.1z3nramv",
+            });
+
+            map.addLayer({
+                    id: "state",
+                    source: "state",
+                    "source-layer": "map_14-5nf348",
+                    maxzoom: zoomThreshold,
+                    type: "fill",
+                    paint: {
+                        "fill-color": [
+                            "interpolate", ["linear"],
+                            ["get", "Confirmed"],
+                            100000, "#f6eedf",
+                            500000, "#ffd369",
+                            1000000, "#e26241",
+                            2000000, "#940a37",
+                            3000000, "#5b0909",
+                        ],
+                        "fill-opacity": [
+                            "case", ["boolean", ["feature-state", "hover"], false],
+                            1,
+                            0.75,
+                        ],
+                    },
+                },
+                "waterway-label"
+            );
+
+            map.addLayer({
+                    id: "county",
+                    source: "county",
+                    "source-layer": "map-4-3e0xae",
+                    minzoom: zoomThreshold,
+                    type: "fill",
+                    paint: {
+                        "fill-color": [
+                            "interpolate", ["linear"],
+                            ["get", "Confirmed"],
+                            1000, "#f6eedf",
+                            10000, "#ffd369",
+                            50000, "#e26241",
+                            100000, "#940a37",
+                            300000, "#5b0909",
+                        ],
+                        "fill-opacity": [
+                            "case", ["boolean", ["feature-state", "hover"], false],
+                            1,
+                            0.75,
+                        ],
+                    },
+                },
+                "waterway-label"
+            );
+
+
+        });
+
+
+        map.on("click", "state", function(e) {
+            numformat = new Intl.NumberFormat("en-US");
+            var state = e.features[0].properties.State;
+            var confirmed = numformat.format(e.features[0].properties.Confirmed);
+            var deaths = numformat.format(e.features[0].properties.Deaths);
+            var tested = numformat.format(e.features[0].properties.People_Tested);
+            var incidentrate = numformat.format(e.features[0].properties.Incident_Rate);
+            var testingrate = numformat.format(e.features[0].properties.Testing_Rate);
+            var travelrestrictions = e.features[0].properties.Travel_Restrictions;
+
+            var popup =
+                "<h2>" +
+                state +
+                "</h2>" +
+                "<strong>Confirmed: </strong><p>" +
+                confirmed +
+                "</p></br>" +
+                "<strong>Deaths: </strong><p>" +
+                deaths +
+                "</p></br>" +
+                "<strong>People Tested: </strong><p>" +
+                tested +
+                "</p></br>" +
+                "<strong>Incident Rate: </strong><p>" +
+                incidentrate +
+                "</p></br>" +
+                "<strong>Testing Rate: </strong><p>" +
+                testingrate +
+                "</p></br>" +
+                "<strong>Travel Restrictions: </strong><p>" +
+                travelrestrictions +
+                "</p></br>" +
+                "</p>";
+
+            new mapboxgl.Popup()
+                .setLngLat([e.lngLat.lng, e.lngLat.lat])
+                .setHTML(popup)
+                .addTo(map);
+        });
+
+        map.on("click", "county", function(e) {
+            numformat = new Intl.NumberFormat("en-US");
+            var county = e.features[0].properties.namelsad;
+            var state = e.features[0].properties.state_name;
+            var confirmed = numformat.format(e.features[0].properties.Confirmed);
+            var deaths = numformat.format(e.features[0].properties.Deaths);
+
+            var popup =
+                "<h2>" +
+                county +
+                ", " +
+                state +
+                "</h2>" +
+                "<strong>Confirmed: </strong><p>" +
+                confirmed +
+                "</p></br>" +
+                "<strong>Deaths: </strong><p>" +
+                deaths +
+                "</p></br>";
+
+            new mapboxgl.Popup()
+                .setLngLat([e.lngLat.lng, e.lngLat.lat])
+                .setHTML(popup)
+                .addTo(map);
+        });
+
+
+        map.on("click", "state", function(e) {
+            console.log(e.features);
+        });
+        map.on("click", "county", function(e) {
+            console.log(e.features);
+        });
+
+        var stateLegendEl = document.getElementById("state-legend");
+        var countyLegendEl = document.getElementById("county-legend");
+
+        map.on("zoom", function() {
+            if (map.getZoom() > zoomThreshold) {
+                stateLegendEl.style.display = "none";
+                countyLegendEl.style.display = "block";
+            } else {
+                stateLegendEl.style.display = "block";
+                countyLegendEl.style.display = "none";
+            }
+        });
+    </script>
+    <audio controls autoplay>
+        <source src="\static\resources\The Lion King - Circle of Life.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+</html>

@@ -1,0 +1,196 @@
+<!--This is a standard html file to drop our Leaflet map-->
+<!DOCTYPE html>
+<html lang="en">
+<!-- Standard head.  We call project Leaflet Step-1.  Additionally we bring in the stylesheet for Leaflet and our own css-->
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>COVID Statistics in the US. (COVID total vaccinations)</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
+    <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+    <!-- Our CSS -->
+    <link rel="stylesheet" type="text/css" href="/static/css/mstyle.css" />
+</head>
+<meta charset="utf-8" />
+<title> Covid-19 Map</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet" />
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    }
+    
+    .legend {
+        background-color: #fff;
+        border-radius: 3px;
+        bottom: 30px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+        padding: 10px;
+        position: absolute;
+        right: 10px;
+        z-index: 1;
+    }
+    
+    .legend h4 {
+        margin: 0 0 10px;
+    }
+    
+    .legend div span {
+        border-radius: 50%;
+        display: inline-block;
+        height: 10px;
+        margin-right: 5px;
+        width: 10px;
+    }
+    
+    .mapboxgl-popup {
+        max-width: 1000px;
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        z-index: 100;
+        display: flex;
+    }
+    
+    strong {
+        display: inline;
+    }
+    
+    p {
+        display: inline;
+    }
+</style>
+</head>
+
+<body>
+
+
+    <div id="map"></div>
+
+    <div id="state-legend" class="legend">
+        <h4>Based on people who are fully vaccinated</h4>
+        <div><span style="background-color: #33b200;"></span>≥65%</div>
+        <div><span style="background-color: #5bc132;"></span>≥60%</div>
+        <div><span style="background-color: #70c94c;"></span>≥55%</div>
+        <div><span style="background-color: #84d066;"></span>≥50%</div>
+        <div><span style="background-color: #ade099;"></span>≥45%</div>
+        <div><span style="background-color: #d6efcc;"></span>≥40%</div>
+    </div>
+
+
+    <script>
+        mapboxgl.accessToken =
+            "pk.eyJ1IjoiYWxzaGFtc2k5NiIsImEiOiJja3Fkcng0NW4wZ3BvMnZwaGtvbjRvbGdpIn0.f9nk2hKiNAgGOsZb61NRfA";
+        var map = new mapboxgl.Map({
+            container: "map",
+            style: "mapbox://styles/alshamsi96/ckqdsdspcdu9g17p8iqfhq6xk",
+            center: [-98, 38.88],
+            minZoom: 4,
+            zoom: 4,
+        });
+
+        var zoomThreshold = 5;
+        var hoveredStateId = null;
+        var clickedStateId = null;
+
+        map.on("load", function() {
+            map.addSource("county", {
+                type: "vector",
+                url: "mapbox://alshamsi96.cqyqnbja",
+            });
+
+            map.addSource("state", {
+                type: "vector",
+                url: "mapbox://alshamsi96.agbxz5no",
+            });
+
+            map.addLayer({
+                    id: "state",
+                    source: "state",
+                    "source-layer": "map-8-8dq5mk",
+                    maxzoom: zoomThreshold,
+                    type: "fill",
+                    paint: {
+                        "fill-color": [
+                            "interpolate", ["linear"],
+                            ["get", "Series_Complete_Pop_Pct"],
+                            40, "#d6efcc",
+                            45, "#ade099",
+                            50, "#84d066",
+                            55, "#70c94c",
+                            60, "#5bc132",
+                            65, "#33b200",
+                        ],
+                        "fill-opacity": [
+                            "case", ["boolean", ["feature-state", "hover"], false],
+                            1,
+                            0.75,
+                        ],
+                    },
+                },
+                "waterway-label"
+            );
+
+        });
+
+
+        map.on("click", "state", function(e) {
+            numformat = new Intl.NumberFormat("en-US");
+            var state = e.features[0].properties.State;
+            var confirmed = numformat.format(e.features[0].properties.Confirmed);
+            var deaths = numformat.format(e.features[0].properties.Deaths);
+            var distributed = numformat.format(e.features[0].properties.Distributed);
+            var seriescompleteyes = numformat.format(e.features[0].properties.Series_Complete_Yes);
+            var seriescompletepoppct = numformat.format(e.features[0].properties.Series_Complete_Pop_Pct);
+
+
+            var popup =
+                "<h2>" +
+                state +
+                "</h2>" +
+                "<strong>Confirmed: </strong><p>" +
+                confirmed +
+                "</p></br>" +
+                "<strong>Deaths: </strong><p>" +
+                deaths +
+                "</p></br>" +
+                "<strong>People Distributed: </strong><p>" +
+                distributed +
+                "</p></br>" +
+                "<strong>Total number of people who are fully vaccinated (have second dose of a two-dose vaccine or one dose of a single-dose vaccine) based on the jurisdiction where recipient lives: </strong><p>" +
+                seriescompleteyes +
+                "</p></br>" +
+                "<strong>Percent of people who are fully vaccinated (have second dose of a two-dose vaccine or one dose of a single-dose vaccine) based on the jurisdiction where recipient lives: </strong><p>" +
+                seriescompletepoppct +
+                "</p></br>" +
+                "</p>";
+
+            new mapboxgl.Popup()
+                .setLngLat([e.lngLat.lng, e.lngLat.lat])
+                .setHTML(popup)
+                .addTo(map);
+        });
+
+        map.on("click", "state", function(e) {
+            console.log(e.features);
+        });
+    </script>
+    <audio controls autoplay>
+        <source src="\static\resources\The Walking Dead.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+</body>
+
+</html>

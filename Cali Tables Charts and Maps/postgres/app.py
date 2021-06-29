@@ -113,6 +113,16 @@ def rebirth():
     return render_template('rebirth.html')
 
 
+@app.route("/map_1.html")
+def map_1():
+    return render_template('map_1.html')
+
+
+@app.route("/map_2.html")
+def map_2():
+    return render_template('map_2.html')
+
+
 @app.route("/total_vaccinations_per_hundredMap.html")
 def per100():
     return render_template('total_vaccinations_per_hundredMap.html')
