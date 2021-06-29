@@ -268,9 +268,14 @@
             }
         });
     </script>
-    <audio controls autoplay>
-        <source src="\static\resources\The Lion King - Circle of Life.ogg" type="audio/ogg">
+
+    <audio controls autoplay id="myaudio">
+         <source src="\static\resources\The Lion King - Circle of Life.ogg" type="audio/ogg">
         Your browser does not support the audio element.
     </audio>
+    <script>
+        var audio = document.getElementById("myaudio");
+        audio.volume = 0.2;
+    </script>
 
 </html>

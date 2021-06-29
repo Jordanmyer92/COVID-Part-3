@@ -33,7 +33,8 @@
 
 <body>
 
-
+    <img src="/static/resources/cases-06252021.jpg" alt="Trulli" width="800" height="444" align="right">
+    <img src="/static/resources/CDC_current-case-trend.PNG" alt="Trulli" width="550" height="444" align="left">
 
 
     <!-- Leaflet JS -->
@@ -44,10 +45,14 @@
     <script type="text/javascript" src="/static/js/map.js"></script>
     <!-- Marker Cluster JS -->
     <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js"></script>
-    <audio controls autoplay>
-        <source src="\static\resources\The Walking Dead.ogg" type="audio/ogg">
+    <audio controls autoplay id="myaudio">
+        <source src="\static\resources\The Walking Dead.ogg" type="audio/ogg" volume= .5>
         Your browser does not support the audio element.
     </audio>
+    <script>
+        var audio = document.getElementById("myaudio");
+        audio.volume = 0.2;
+    </script>
 
     <!-- <script type="text/javascript" src="logic.js"></script> -->
     <!-- <script type="text/javascript" src="static/js/logic3.js"></script> -->

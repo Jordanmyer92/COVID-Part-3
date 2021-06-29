@@ -33,9 +33,9 @@
 
 <body>
 
-<h2>HTML Image</h2>
-<img src="/static/resources/linearRegression_plotly.PNG" alt="Trulli" width="700" height="444" align="right">
-<img src="/static/resources/sunburst_usa.PNG" alt="Trulli" width="600" height="444" align="left">
+    <h2>HTML Image</h2>
+    <img src="/static/resources/linearRegression_plotly.PNG" alt="Trulli" width="700" height="444" align="right">
+    <img src="/static/resources/sunburst_usa.PNG" alt="Trulli" width="600" height="444" align="left">
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
@@ -51,9 +51,13 @@
     <!-- <script type="text/javascript" src="static/js/logic4.js"></script> -->
 
 </body>
-   <audio controls autoplay>
-         <source src="\static\resources\The Lion King - Circle of Life.ogg" type="audio/ogg">
+<audio controls autoplay id="myaudio">
+         <source src="\static\resources\Tales from the Cryptkeeper - Animated.ogg" type="audio/ogg">
         Your browser does not support the audio element.
     </audio>
+<script>
+    var audio = document.getElementById("myaudio");
+    audio.volume = 0.2;
+</script>
 
 </html>
