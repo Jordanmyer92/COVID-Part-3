@@ -108,6 +108,11 @@ def destroy():
     return render_template('destroy.html')
 
 
+@app.route("/https://public.tableau.com/app/profile/christopher.turner6134/viz/Project3_16238090086410/GlobalPerspective")
+def tableau():
+    return render_template('https://public.tableau.com/app/profile/christopher.turner6134/viz/Project3_16238090086410/GlobalPerspective')
+
+
 @app.route("/rebirth.html")
 def rebirth():
     return render_template('rebirth.html')
