@@ -20,3 +20,13 @@ Jordan is inspecting COVID-19 testing over time and providing analysis of result
 Mohammed is building off his analysis from project 2 and will knock out the map analysis of the United States.
 John is going to attempt to make the sites look interesting and bring everything together as a cohesive whole.
 We are continuing our COVID-19 exploration and attempting to compare multiple data sets across the globe. We want to analyze the effects of testing, vaccination, and recovery during the pandemic. We will provide links to our data sources and screenshots/graphs to back up our analysis.
+
+Screenshots:
+
+https://github.com/Jordanmyer92/COVID-Part-3/blob/main/Screenshots/Bubble%20Chart.png
+
+https://github.com/Jordanmyer92/COVID-Part-3/blob/main/Screenshots/Regression%20Matplotlib.png
+
+https://github.com/Jordanmyer92/COVID-Part-3/blob/main/Screenshots/Regresssion.png
+
+https://github.com/Jordanmyer92/COVID-Part-3/blob/main/Screenshots/Sunburst%20Chart.png
