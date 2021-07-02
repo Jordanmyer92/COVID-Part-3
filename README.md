@@ -16,7 +16,7 @@ Database: • JavaScript • Html • CSS • Python Flask • Pandas • Tablea
 JavaScript Libraries: • D3 • Anime.js • JavaScript Plotly • Leaflet
 Member input:
 Christopher is inspecting the global impact of COVID-19 and adding his visualization via Tableau.
-Jordan is inspecting COVID-19 testing over time and providing analysis of results.
+Jordan is inspecting COVID-19 vaccinations on a global scale and providing analysis of results along with providing linear regression for global vaccinations vs cases.
 Mohammed is building off his analysis from project 2 and will knock out the map analysis of the United States.
 John is going to attempt to make the sites look interesting and bring everything together as a cohesive whole.
 We are continuing our COVID-19 exploration and attempting to compare multiple data sets across the globe. We want to analyze the effects of testing, vaccination, and recovery during the pandemic. We will provide links to our data sources and screenshots/graphs to back up our analysis.
